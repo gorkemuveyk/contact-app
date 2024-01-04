@@ -1,8 +1,15 @@
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import Modal from "./Modal";
 import PropType from "prop-types";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firabase";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+
+const contactSchemeValidation = Yup.object().shape({
+  name: Yup.string().required("Name is Required"),
+  email: Yup.string().email("Invalid Email").required("Email is Required"),
+});
 
 const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
   const addContact = async (contact) => {
@@ -10,6 +17,7 @@ const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
       const contactRef = collection(db, "contacts");
       await addDoc(contactRef, contact);
       onClose();
+      toast.success("Contact Added Successfully");
     } catch (error) {
       console.log(error);
     }
@@ -19,6 +27,7 @@ const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
     try {
       const contactRef = doc(db, "contacts", id);
       await updateDoc(contactRef, contact);
+      toast.success("Contact Updated Successfully");
       onClose();
     } catch (error) {
       console.log(error);
@@ -28,6 +37,7 @@ const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>
         <Formik
+          validationSchema={contactSchemeValidation}
           initialValues={
             isUpdate
               ? {
@@ -50,6 +60,9 @@ const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
                 name="name"
                 className="border rounded outline-none h-10 p-3"
               />
+              <div className="text-red-500 text-xs">
+                <ErrorMessage name="name" />
+              </div>
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="email">Email</label>
@@ -58,6 +71,9 @@ const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
                 name="email"
                 className="border rounded outline-none h-10 p-3"
               />
+              <div className="text-red-500 text-xs">
+                <ErrorMessage name="email" />
+              </div>
             </div>
 
             <button
