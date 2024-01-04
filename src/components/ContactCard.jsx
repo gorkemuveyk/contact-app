@@ -26,10 +26,10 @@ const ContactCard = ({ contact }) => {
         key={contact.id}
         className="flex bg-yellow justify-between items-center p-2 rounded"
       >
-        <div className="flex gap-2 items-center">
+        <div className="flex flex-wrap gap-2 items-center">
           <HiOutlineUserCircle className="text-orange text-4xl" />
 
-          <div className="text-black">
+          <div className="text-black flex flex-col">
             <h2 className="font-medium">{contact.name}</h2>
             <p className="text-sm">{contact.email}</p>
           </div>
