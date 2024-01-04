@@ -20,7 +20,8 @@ git clone https://github.com/gorkemuveyk/contact-app.git
 
 ### Firebase
 
-The contact app uses firebase. so create a project for firebase and specify your project information, for example in the api key **config/firebase.js** file.
+The contact app uses firebase. so create project for firebase called contacts and specify your project information, for example api key in **config/firebase.js** file.
+Don't forget to create a collection called contacts
 
 ```javascript
 const firebaseConfig = {
