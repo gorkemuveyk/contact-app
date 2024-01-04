@@ -15,7 +15,7 @@ The contact app allows you to add your contacts to the database, delete them and
 #### Clone
 
 ```
-https://github.com/gorkemuveyk/dice-game.git
+https://github.com/gorkemuveyk/contact-app.git
 ```
 
 ### Firebase
